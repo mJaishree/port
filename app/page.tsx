@@ -1,5 +1,6 @@
 "use client";
 import About from "@/components/About/About";
+import Contact from "@/components/Contact/Contact";
 import Hero from "@/components/Hero/Hero";
 import Projects from "@/components/Projects/Project";
 import CardDemo from "@/components/cards-demo-3"
@@ -35,7 +36,8 @@ export default function Home() {
       <Hero />
       <About/>
       <Projects />
-      <CardDemo />
+      {/* <CardDemo /> */}
+      <Contact/>
       <FloatingDock
         items={navigationItems}
         desktopClassName="fixed bottom-4 left-1/2 -translate-x-1/2 z-50"

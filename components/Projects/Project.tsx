@@ -1,24 +1,29 @@
 "use client"
 import { useEffect, useState } from "react"
 import { Qwitcher_Grypen } from "next/font/google";
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { HoverBorderGradient } from "@/components/ui/card-hover"
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip"
-import { GhibliBackground } from "@/components/ui/ghibli-background"
-import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card"
-import { ExternalLink, Github, ArrowRight } from "lucide-react"
+import { ExternalLink, Github, ArrowRight, ChevronDown } from "lucide-react"
 import Link from "next/link"
+import { SparklesCore } from "@/components/ui/sparkles"
+
 const qwitcher = Qwitcher_Grypen({
     weight: "400",
     subsets: ["latin"],
-  });
+});
 
 export default function Projects() {
   const [mounted, setMounted] = useState(false)
+  const [activeProject, setActiveProject] = useState<number | null>(null)
  
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  const toggleProject = (projectId: number) => {
+    setActiveProject(activeProject === projectId ? null : projectId);
+  };
 
   // Project data
   const projects = [
@@ -105,8 +110,45 @@ export default function Projects() {
   ]
 
   return (
-    <div className="py-24 min-h-screen">
-      <div className="container mx-auto px-4">
+    <div className="py-24 min-h-screen relative overflow-hidden">
+      {/* Background sparkles similar to About section */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-10 opacity-30">
+          <SparklesCore
+            background="transparent"
+            minSize={0.7}
+            maxSize={1.5}
+            particleCount={50}
+            particleColor="#adcdd4"
+            className="h-full w-full"
+          />
+        </div>
+      </div>
+      
+      {/* Ghibli floating elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-40 left-20 w-16 h-16 bg-white rounded-full opacity-40 animate-float"></div>
+        <div className="absolute top-60 right-40 w-10 h-10 bg-white rounded-full opacity-30 animate-float-delayed"></div>
+        <div className="absolute bottom-40 left-1/3 w-12 h-12 bg-white rounded-full opacity-50 animate-float-slow"></div>
+      </div>
+      
+      {/* Ghibli-inspired decorative leaves */}
+      <div className="absolute bottom-10 left-10 w-20 h-20">
+        <div className="w-full h-full bg-contain bg-no-repeat bg-center" style={{backgroundImage: "url('/profile/leaf.png')"}}></div>
+      </div>
+      <div className="absolute top-20 right-10 w-24 h-24">
+        <div className="w-full h-full bg-contain bg-no-repeat bg-center" style={{backgroundImage: "url('/profile/leaf.png')"}}></div>
+      </div>
+      
+      {/* Additional decorative elements */}
+      <div className="absolute bottom-40 right-20 w-16 h-16">
+        <div className="w-full h-full bg-contain bg-no-repeat bg-center" style={{backgroundImage: "url('/profile/leaf.png')", transform: "rotate(45deg)"}}></div>
+      </div>
+      <div className="absolute top-60 left-20 w-14 h-14">
+        <div className="w-full h-full bg-contain bg-no-repeat bg-center" style={{backgroundImage: "url('/profile/leaf.png')", transform: "rotate(-30deg)"}}></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section heading with simple animation */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -115,66 +157,79 @@ export default function Projects() {
           className="text-center mb-16"
         >
           <div className="text-center mb-12">
-          <h1 className={`${qwitcher.className} text-5xl md:text-7xl mb-4 text-white`}>
-            Projects
-            <span className="block w-24 h-1 bg-pink-500 mx-auto mt-2 rounded-lg"></span>
-          </h1>
-        </div>
+            <h1 className={`${qwitcher.className} text-5xl md:text-7xl mb-4 text-white`}>
+              Projects
+              <span className="block w-24 h-1 bg-pink-500 mx-auto mt-2 rounded-lg"></span>
+            </h1>
+          </div>
         </motion.div>
 
-        {/* Projects grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* Projects Accordion */}
+        <div className="max-w-3xl mx-auto">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="mb-4"
             >
-              <CardContainer className="w-full">
-                <CardBody className="w-full h-full">
-                  <HoverBorderGradient
-                    containerClassName="w-full h-full"
-                    className="p-0 overflow-hidden"
-                    gradientClassName={project.color}
+              <HoverBorderGradient
+                containerClassName="w-full"
+                className="p-0 overflow-hidden"
+                gradientClassName={project.color}
+              >
+                <div className="w-full">
+                  {/* Accordion Header */}
+                  <motion.div 
+                    className="p-5 flex justify-between items-center cursor-pointer"
+                    onClick={() => toggleProject(project.id)}
+                    whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
                   >
-                    <div className="h-full flex flex-col">
-                      {/* Project image */}
-                      <div className="relative h-48 overflow-hidden">
-                        <CardItem translateZ={20}>
-                          <img
-                            src={project.image || "/placeholder.svg"}
-                            alt={project.title}
-                            className="w-full h-full object-cover"
-                          />
-                        </CardItem>
-                      </div>
-
-                      {/* Project content */}
-                      <div className="p-6 flex flex-col flex-grow">
-                        <CardItem translateZ={30}>
-                          <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
-                        </CardItem>
-                        <CardItem translateZ={20}>
-                          <p className="text-white/70 text-sm mb-4">{project.description}</p>
-                        </CardItem>
-
-                        {/* Technologies */}
-                        <CardItem translateZ={40} className="mt-auto">
-                          <div className="mb-4">
-                            <AnimatedTooltip items={project.technologies} />
+                    <h3 className="text-xl font-bold text-white">{project.title}</h3>
+                    <motion.div
+                      animate={{ rotate: activeProject === project.id ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ChevronDown className="text-white" size={20} />
+                    </motion.div>
+                  </motion.div>
+                  
+                  {/* Accordion Content */}
+                  <AnimatePresence>
+                    {activeProject === project.id && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="p-5 pt-0 border-t border-white/10">
+                          {/* Project image */}
+                          <div className="relative h-48 overflow-hidden rounded-lg mb-4">
+                            <img
+                              src={project.image || "/placeholder.svg"}
+                              alt={project.title}
+                              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                            />
                           </div>
-                        </CardItem>
-
-                        {/* Links */}
-                        <CardItem translateZ={50}>
-                          <div className="flex items-center justify-between">
-                            <div className="flex gap-3">
+                          
+                          {/* Project description */}
+                          <p className="text-white/70 text-sm mb-6">{project.description}</p>
+                          
+                          {/* Technologies and Links */}
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div className="mb-4 sm:mb-0">
+                              <AnimatedTooltip items={project.technologies} />
+                            </div>
+                            
+                            <div className="flex items-center gap-4">
                               <Link
                                 href={project.links.github}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-white/70 hover:text-white transition-colors"
+                                className="text-white/70 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"
                               >
                                 <Github size={18} />
                               </Link>
@@ -182,26 +237,26 @@ export default function Projects() {
                                 href={project.links.live}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-white/70 hover:text-white transition-colors"
+                                className="text-white/70 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"
                               >
                                 <ExternalLink size={18} />
                               </Link>
+                              <Link
+                                href={project.links.live}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-white bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 px-4 py-2 rounded-full flex items-center gap-1 text-sm transition-all duration-300 hover:shadow-glow"
+                              >
+                                View Project <ArrowRight size={14} />
+                              </Link>
                             </div>
-                            <Link
-                              href={project.links.live}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-white/70 hover:text-white flex items-center gap-1 text-sm transition-colors"
-                            >
-                              View Project <ArrowRight size={14} />
-                            </Link>
                           </div>
-                        </CardItem>
-                      </div>
-                    </div>
-                  </HoverBorderGradient>
-                </CardBody>
-              </CardContainer>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </HoverBorderGradient>
             </motion.div>
           ))}
         </div>
