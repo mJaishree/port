@@ -1,6 +1,8 @@
 "use client";
 import About from "@/components/About/About";
 import Hero from "@/components/Hero/Hero";
+import Projects from "@/components/Projects/Project";
+import CardDemo from "@/components/cards-demo-3"
 import { FloatingDock } from "@/components/ui/floating-dock";
 import { IconHome, IconUser, IconCode, IconMail } from "@tabler/icons-react";
 
@@ -32,6 +34,8 @@ export default function Home() {
     <main className="gradient-bg">
       <Hero />
       <About/>
+      <Projects />
+      <CardDemo />
       <FloatingDock
         items={navigationItems}
         desktopClassName="fixed bottom-4 left-1/2 -translate-x-1/2 z-50"

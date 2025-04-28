@@ -12,7 +12,7 @@ const qwitcher = Qwitcher_Grypen({
 
 export default function About() {
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden py-16 ">
+    <section className="min-h-[80vh] flex items-center justify-center relative overflow-hidden py-16 ">
       {/* Background with sparkles matching Hero */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 z-10 opacity-30">

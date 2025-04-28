@@ -29,7 +29,7 @@ export default function Hero() {
   ]
 
   return (
-    <section className="h-screen flex items-center justify-center relative overflow-hidden">
+    <section className="min-h-[80vh] flex items-center justify-center relative overflow-hidden">
       {/* Background animations */}
       <div className="absolute inset-0 z-0">
         {/* <BackgroundBeamsWithCollision className="h-full w-full" children={undefined} /> */}
