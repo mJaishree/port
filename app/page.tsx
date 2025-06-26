@@ -44,7 +44,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   // Custom scroll function with loading animation
-  const scrollToSection = (ref, sectionId) => {
+  const scrollToSection = (ref:any, sectionId:any) => {
     setIsLoading(true);
     
     // Simulate loading time
