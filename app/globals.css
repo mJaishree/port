@@ -39,6 +39,53 @@
   animation: float-slow 10s ease-in-out infinite;
 }
 
+/* Add these styles to your existing globals.css file */
+
+.perspective-500 {
+  perspective: 500px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.translate-z-12 {
+  transform: translateZ(12px);
+}
+
+.-translate-z-12 {
+  transform: translateZ(-12px);
+}
+
+.translate-x-12 {
+  transform: translateX(12px);
+}
+
+.-translate-x-12 {
+  transform: translateX(-12px);
+}
+
+.translate-y-12 {
+  transform: translateY(12px);
+}
+
+.-translate-y-12 {
+  transform: translateY(-12px);
+}
+
+.rotate-y-90 {
+  transform: rotateY(90deg);
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.rotate-x-90 {
+  transform: rotateX(90deg);
+}
+
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

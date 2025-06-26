@@ -64,24 +64,61 @@ const FloatingDockMobile = ({
                 <Link
                   href={item.href}
                   key={item.title}
-                  className="h-10 w-10 rounded-full bg-white/50 dark:bg-white/5 flex items-center justify-center backdrop-blur-sm"
+                  className="h-12 w-12 rounded-full bg-white/90 dark:bg-neutral-800/90 flex items-center justify-center backdrop-blur-sm shadow-lg border border-pink-200 dark:border-pink-800"
                 >
-                  <div className="h-4 w-4 text-pink-500">{item.icon}</div>
+                  <div className="h-5 w-5 text-pink-500">{item.icon}</div>
                 </Link>
               </motion.div>
             ))}
           </motion.div>
         )}
       </AnimatePresence>
-      <button
+      
+      {/* Enhanced FAB-style button */}
+      <motion.button
         onClick={() => setOpen(!open)}
-        className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-800 flex items-center justify-center"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="relative h-14 w-14 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200"
       >
-        <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
-      </button>
+        <motion.div
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <IconLayoutNavbarCollapse className="h-6 w-6 text-white" />
+        </motion.div>
+        
+        {/* Pulse animation when closed */}
+        {!open && (
+          <motion.div
+            className="absolute inset-0 rounded-full bg-pink-400"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.7, 0, 0.7],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        )}
+        
+        {/* Menu label */}
+        <motion.span
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: open ? 0 : 1, x: open ? -10 : -60 }}
+          className="absolute right-full mr-3 px-2 py-1 bg-black/80 text-white text-xs rounded whitespace-nowrap pointer-events-none"
+        >
+          Menu
+        </motion.span>
+      </motion.button>
     </div>
   );
 };
+
+
+
 
 const FloatingDockDesktop = ({
   items,
