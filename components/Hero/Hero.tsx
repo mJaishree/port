@@ -45,8 +45,16 @@ export default function Hero() {
     setInteractivePetals(prev => prev + 5);
   };
 
+  // Function to scroll to Projects section
+  const scrollToProjects = () => {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 sm:px-6 pt-30 pb-8 sm:pt-8 sm:pb-0">
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden ">
       {/* Cherry Blossom Animation Layer */}
       <CherryBlossomAnimation 
         interactivePetals={interactivePetals}
@@ -142,7 +150,10 @@ export default function Hero() {
               borderRadius="9999px"
               className="text-white font-medium relative z-20 border-none px-6 py-2 sm:px-8 sm:py-3 text-sm sm:text-base"
               duration={3000}
-              onClick={handleInteraction}
+              onClick={() => {
+                handleInteraction();
+                scrollToProjects();
+              }}
             >
               View My Work 
             </MovingBorderButton>
@@ -167,7 +178,7 @@ export default function Hero() {
                   className="w-full h-full rounded-full bg-white/10 flex items-center justify-center border border-[#adcdd4]/30 group-hover:border-pink-400/60 transition-colors backdrop-blur-sm"
                   onMouseEnter={handleInteraction}
                 >
-                                   <CardItem
+                  <CardItem
                     translateZ={40}
                     className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl"
                   >
@@ -176,7 +187,7 @@ export default function Hero() {
                 </CardItem>
                 <CardItem
                   translateZ={10}
-                  className="absolute -bottom-3 xs:-bottom-4 sm:-bottom-5 md:-bottom-6 left-1/2 transform -translate-x-1/2 text-xs xs:text-sm text-white/70 whitespace-nowrap font-medium"
+                  className="absolute -bottom-6 xs:-bottom-7 sm:-bottom-8 md:-bottom-9 left-1/2 transform -translate-x-1/2 text-xs xs:text-sm text-white/70 whitespace-nowrap font-medium "
                 >
                   {tech.name}
                 </CardItem>
